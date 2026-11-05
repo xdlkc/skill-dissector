@@ -16,6 +16,8 @@ Resolve what the user means: a path, a skill name under `~/.claude/skills/` or `
 
 Run `scripts/inventory.py <skill-dir>` for a quick structural map (files, sizes, line counts, frontmatter, referenced paths, dangling references). Then read SKILL.md fully, and read bundled files in the order SKILL.md points to them. Skim scripts for what they do; read them closely only when they carry core logic.
 
+**Collections** (a plugin or marketplace whose children are skills): run `scripts/inventory.py` on the parent directory to get a per-skill table and a rough "cited by" count. Identify the hub (router) skill first and analyze the collection as a system: routing, shared principles, how skills call each other. Citation counts match plain words (`how`, `why`, `correct`), so confirm edges by reading before reporting them. Read the hub fully plus a representative sample of leaves, and state which were not read.
+
 ### 2. Dissect along six layers
 Work through these layers; `references/analysis-framework.md` has the detailed questions and signals for each. Skip a layer only if the skill genuinely has nothing there, and say so.
 
@@ -35,7 +37,7 @@ For each notable design choice, state: the choice → the problem it addresses �
 - Optionally, if the user asked to compare, build a side-by-side table across the same six layers.
 
 ### 5. Write the report
-Use the template below. Adapt depth to the request: "quick take" → sections 1, 2 and 5 only; "deep dive" → everything. Reply in the user's language. Cite files as `path:line` so claims are checkable.
+Use the template below. When the user wants something a general audience grasps at a glance, deliver a single self-contained HTML page (analogy, layered diagram, a worked example flow, key decisions, strengths/risks) instead of Markdown; keep every claim labelled observed or inferred. Adapt depth to the request: "quick take" → sections 1, 2 and 5 only; "deep dive" → everything. Reply in the user's language. Cite files as `path:line` so claims are checkable.
 
 ```
 # <skill-name> 原理分析 / Principles Report

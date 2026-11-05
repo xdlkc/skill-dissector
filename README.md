@@ -16,4 +16,5 @@ Ask Claude things like "拆解一下 dingtalk-todo 这个 skill 的原理" or "a
 
 - `SKILL.md` — workflow and report template
 - `references/analysis-framework.md` — detailed questions per layer
-- `scripts/inventory.py` — structural inventory (files, frontmatter, dangling refs)
+- `scripts/inventory.py` — structural inventory (files, frontmatter, dangling refs; also summarizes whole skill collections)
+- `assets/example-visual-report.html` — example animated HTML report (analysis of cursor/plugins pstack)

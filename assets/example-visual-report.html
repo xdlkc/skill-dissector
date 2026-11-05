@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pstack 全景图：58 个 skill 怎么配合工作</title>
+<style>
+:root{--bg:#f7f2e8;--bg2:#efe7d6;--ink:#1c1a16;--mute:#6e675a;--card:#fffdf8;--line:#e1d7c2;--acc:#d9480f;--acc-soft:#ffe8d6;--teal:#0b7a75;--teal-soft:#d6f1ee;--blue:#2b5fd9;--blue-soft:#e0e9ff;--vio:#7048e8;--vio-soft:#ebe3ff;--gold:#b7791f;--gold-soft:#fdf0cf;--rose:#c2255c;--rose-soft:#fde0ea;--shadow:0 8px 30px rgba(60,40,10,.08)}
+@media(prefers-color-scheme:dark){:root{--bg:#14120e;--bg2:#1b1812;--ink:#f2ecdd;--mute:#a79f8b;--card:#201d16;--line:#3a352a;--acc:#ff8a4c;--acc-soft:#33231a;--teal:#3dd6cc;--teal-soft:#122b29;--blue:#7ea3ff;--blue-soft:#18223d;--vio:#a58bff;--vio-soft:#251d40;--gold:#f2c14e;--gold-soft:#332a12;--rose:#ff7aa8;--rose-soft:#3a1826;--shadow:0 8px 30px rgba(0,0,0,.4)}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 -apple-system,"PingFang SC","Noto Sans SC",sans-serif;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px;align-items:center;height:52px;overflow-x:auto}
+nav b{margin-right:12px;white-space:nowrap}
+nav a{color:var(--mute);text-decoration:none;font-size:14px;padding:5px 12px;border-radius:99px;white-space:nowrap}
+nav a:hover{background:var(--acc-soft);color:var(--acc)}
+/* hero */
+.hero{position:relative;padding:72px 0 56px;overflow:hidden}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.kicker{color:var(--acc);font-weight:700;letter-spacing:.1em;font-size:13px}
+h1{font-size:clamp(34px,6vw,60px);line-height:1.1;margin:10px 0 16px;letter-spacing:-.03em}
+h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--acc-soft) 62%);}
+.lead{font-size:19px;color:var(--mute);max-width:660px}.lead b{color:var(--ink)}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;min-width:130px;box-shadow:var(--shadow)}
+.stat b{font-size:34px;line-height:1;color:var(--acc);display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--mute)}
+section{padding:48px 0}
+h2{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+.sub{color:var(--mute);margin:0 0 26px;max-width:680px}
+/* flow */
+.flowbox{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 22px;box-shadow:var(--shadow)}
+.track{position:relative;display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:6px 0 4px}
+.track::before{content:"";position:absolute;left:5%;right:5%;top:26px;height:4px;background:var(--line);border-radius:4px}
+.track .bar{position:absolute;left:5%;top:26px;height:4px;background:linear-gradient(90deg,var(--acc),var(--gold));border-radius:4px;width:0;transition:width .6s ease}
+.node{position:relative;z-index:1;text-align:center;cursor:pointer;background:none;border:0;color:inherit;font:inherit;padding:0}
+.dot{width:54px;height:54px;margin:0 auto;border-radius:50%;background:var(--bg2);border:3px solid var(--line);display:grid;place-items:center;font-size:22px;transition:.35s}
+.node small{display:block;font-size:12px;margin-top:6px;color:var(--mute);line-height:1.3;transition:.3s}
+.node.done .dot{border-color:var(--gold);background:var(--gold-soft)}
+.node.on .dot{border-color:var(--acc);background:var(--acc-soft);transform:scale(1.18);box-shadow:0 0 0 8px color-mix(in srgb,var(--acc) 16%,transparent);animation:pulse 1.6s infinite}
+.node.on small{color:var(--ink);font-weight:700}
+@keyframes pulse{50%{box-shadow:0 0 0 14px color-mix(in srgb,var(--acc) 5%,transparent)}}
+.detail{margin-top:22px;display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start;min-height:190px}
+.detail h3{margin:0 0 6px;font-size:22px}
+.detail p{margin:6px 0;color:var(--mute)}
+.detail .say{background:var(--bg2);border-radius:14px;padding:12px 14px;font-size:14.5px;border-left:4px solid var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13.5px;padding:4px 12px;border-radius:99px;background:var(--acc-soft);color:var(--acc);font-weight:600;cursor:pointer;border:0;font-family:inherit}
+.chip:hover{filter:brightness(.95)}
+.ctrl{display:flex;gap:10px;margin-top:16px;align-items:center}
+.btn{border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:99px;padding:6px 16px;cursor:pointer;font:inherit;font-size:14px}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.fade{animation:fade .5s}@keyframes fade{from{opacity:0;transform:translateY(8px)}}
+.base{margin-top:20px;border-radius:14px;background:repeating-linear-gradient(135deg,var(--teal-soft),var(--teal-soft) 10px,transparent 10px,transparent 20px);border:1px dashed var(--teal);padding:10px 14px;font-size:14px;color:var(--teal)}
+/* hub */
+.graphbox{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:28px 22px 24px;position:relative;overflow:hidden}
+.hubcard{width:min(420px,100%);margin:0 auto;text-align:center;background:var(--acc);color:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 10px 30px color-mix(in srgb,var(--acc) 35%,transparent);position:relative;cursor:pointer}
+.hubcard b{font-size:22px;display:block;letter-spacing:-.01em}
+.hubcard span{font-size:14px;opacity:.92}
+.hubcard::after{content:"";position:absolute;inset:-6px;border-radius:24px;border:2px solid var(--acc);opacity:0;animation:ring 2.6s infinite}
+@keyframes ring{0%{opacity:.6;transform:scale(.97)}100%{opacity:0;transform:scale(1.06)}}
+.trunk{position:relative;height:44px;width:2px;margin:0 auto;background:repeating-linear-gradient(var(--acc) 0 6px,transparent 6px 12px);animation:flowy 1s linear infinite}
+@keyframes flowy{to{background-position:0 12px}}
+.cols{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;position:relative;padding-top:16px}
+.cols::before{content:"";position:absolute;top:0;left:10%;right:10%;border-top:2px dashed color-mix(in srgb,var(--acc) 55%,transparent)}
+.col{position:relative;background:var(--bg2);border-radius:16px;padding:12px 10px 10px}
+.col::before{content:"";position:absolute;top:-16px;left:50%;height:16px;border-left:2px dashed color-mix(in srgb,var(--acc) 55%,transparent)}
+.col h4{margin:0 0 2px;font-size:15px;text-align:center}
+.col .d{font-size:12px;color:var(--mute);text-align:center;margin-bottom:10px;line-height:1.4}
+.pill{background:var(--card);border:1.5px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:8px 10px;margin:7px 0;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s,opacity .2s}
+.pill b{display:block;font-size:13.5px;font-family:ui-monospace,monospace;color:var(--c)}
+.pill span{display:block;font-size:12.5px;color:var(--mute);line-height:1.45;margin-top:2px}
+.cols.hov .pill{opacity:.35}
+.cols.hov .pill.self,.cols.hov .pill.rel{opacity:1}
+.pill.self{border-color:var(--c);box-shadow:var(--shadow);transform:translateY(-2px)}
+.pill.rel{border-color:var(--c);border-style:dashed;transform:translateY(-2px)}
+.pill .tag2{display:none;font-size:11px;margin-top:4px;color:var(--c);font-weight:700}
+.pill.rel .tag2,.pill.self .tag2{display:block}
+.relhint{margin-top:14px;text-align:center;font-size:13px;color:var(--mute);min-height:20px}
+@media(max-width:900px){.cols{grid-template-columns:1fr 1fr}.cols::before,.col::before{display:none}}
+@media(max-width:560px){.cols{grid-template-columns:1fr}}
+/* map */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:7px 16px;cursor:pointer;font:inherit;font-size:14.5px;transition:.2s}
+.tab:hover{transform:translateY(-2px)}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab i{font-style:normal;opacity:.6;margin-left:4px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.sk{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s,box-shadow .2s,border-color .2s}
+.sk.in{opacity:1;transform:none}
+.sk:hover{box-shadow:var(--shadow);border-color:var(--c)}
+.sk::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+.sk h4{margin:0;font-size:16px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sk code{font-size:13px;background:var(--cs);color:var(--c);padding:1px 8px;border-radius:8px}
+.sk .what{margin:6px 0 0;font-size:14.5px}
+.sk .more{max-height:0;overflow:hidden;transition:max-height .4s ease;font-size:13.5px;color:var(--mute)}
+.sk.open .more{max-height:200px}
+.sk .more p{margin:8px 0 0}
+.sk .more b{color:var(--ink)}
+.sk .hint{position:absolute;right:12px;top:12px;font-size:11px;color:var(--mute);opacity:.7}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin:-8px 0 18px}
+/* principles */
+.pgroups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.pg{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.pg h4{margin:0 0 10px;font-size:15px}
+.pr{padding:7px 10px;border-radius:10px;font-size:14px;cursor:default;transition:.2s;margin:2px 0}
+.pr:hover{background:var(--teal-soft)}
+.pr b{display:block}.pr span{display:none;font-size:13px;color:var(--mute);line-height:1.5}
+.pr:hover span{display:block}
+.foot{border-top:1px solid var(--line);padding:30px 0 70px;font-size:13.5px;color:var(--mute)}
+.foot b{color:var(--ink)}
+.tag{display:inline-block;font-size:11.5px;padding:0 8px;border-radius:99px;border:1px solid var(--teal);color:var(--teal);margin-right:4px}
+.tag.i{border-color:var(--gold);color:var(--gold)}
+@media(max-width:760px){.track{grid-template-columns:repeat(5,1fr)}.track::before,.track .bar{display:none}.detail{grid-template-columns:1fr}.node{margin-bottom:12px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.sk{opacity:1;transform:none}}
+</style></head><body>
+
+<nav><div class="wrap"><b>pstack 全景图</b><a href="#flow">总流程</a><a href="#graph">谁调用谁</a><a href="#map">58 个 skill</a><a href="#principles">24 条原则</a><a href="#about">说明</a></div></nav>
+
+<header class="hero"><canvas id="bg"></canvas><div class="wrap">
+  <div class="kicker">CURSOR / PLUGINS / PSTACK</div>
+  <h1>让 AI 像<em>靠谱的工程团队</em>一样干活的一整套“说明书”</h1>
+  <p class="lead">pstack 不是一个功能，而是 <b>58 份说明书（skill）</b>。你只需要对 AI 说一句 <b>/poteto-mode + 任务</b>，它会自己翻开对应的说明书，一步步照做：<b>先听懂 → 想清楚 → 分工干 → 互相挑错 → 拿证据 → 复盘</b>。</p>
+  <div class="stats">
+    <div class="stat"><b data-n="58">0</b><span>份说明书（skill）</span></div>
+    <div class="stat"><b data-n="23">0</b><span>套任务流程（剧本）</span></div>
+    <div class="stat"><b data-n="24">0</b><span>条工程原则</span></div>
+    <div class="stat"><b data-n="2">0</b><span>个专职子 AI</span></div>
+    <div class="stat"><b data-n="57">0</b><span>个需手动调用</span></div>
+  </div>
+</div></header>
+
+<section id="flow"><div class="wrap">
+  <h2>总流程：一个任务从头到尾怎么走</h2>
+  <p class="sub">下面的动画会自动播放；点任何一步可以暂停并查看这一步 AI 在做什么、用到哪些 skill（点小标签可直接跳到那张卡片）。</p>
+  <div class="flowbox">
+    <div class="track" id="track"><div class="bar" id="bar"></div></div>
+    <div class="detail" id="detail"></div>
+    <div class="ctrl"><button class="btn" id="play">⏸ 暂停</button><button class="btn" id="prev">← 上一步</button><button class="btn" id="next">下一步 →</button></div>
+    <div class="base">🧱 <b>贯穿全程的底座：24 条工程原则</b>。比如“能删就不加”“没验证不算完成”“能自己查到的事实不问人”，每一步遇到相应情况都会被引用。</div>
+  </div>
+</div></section>
+
+<section id="graph"><div class="wrap">
+  <h2>谁调用谁：总管与它的“工具箱”</h2>
+  <p class="sub">总管 <b>poteto-mode</b> 不亲自干所有事，而是按需叫出下面这些专家。把鼠标放在任一卡片上，会高亮“它还会叫谁 / 被谁叫”。点击可跳到详细介绍。</p>
+  <div class="graphbox" id="hub"></div>
+</div></section>
+
+<section id="map"><div class="wrap">
+  <h2>58 个 skill 逐个讲</h2>
+  <p class="sub">按“用途”分成 7 类。点击卡片展开：什么时候用、它具体做什么。</p>
+  <div class="tabs" id="tabs"></div>
+  <div class="legend"><span>🔒 = 必须手动输入 /名字 才启动</span><span>🤖 = AI 看到合适场景会自动用</span></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="principles"><div class="wrap">
+  <h2>24 条工程原则：所有 skill 共同的底线</h2>
+  <p class="sub">每条原则都是一个很短的 skill（10~30 行），写明“遇到什么情况时适用”。把鼠标放上去看一句话解释。</p>
+  <div class="pgroups" id="pg"></div>
+</div></section>
+
+<section id="about"><div class="wrap"><div class="foot">
+  <b>怎么读出来的。</b>读了 pstack 的 README、plugin.json、poteto-mode 全文及其 feature 剧本、arena、architect、interrogate、how、why、correct、show-me-your-work、unslop、swarm 等，并用 <code>skill-dissector</code> 的 inventory 脚本统计数量与互相引用；其余 skill 根据其 frontmatter 描述与开头内容概括，<b>没有逐个读完</b>（尤其 statechart 含 400 多个文件的形式化验证工具）。<br>
+  <span class="tag">观察</span>= 文件里能直接引用的事实；<span class="tag i">推断</span>= 我对用途的概括。每张卡片的“一句话”是根据描述意译的，调用关系图只画了我读文本确认过的连线。<br>
+  来源：github.com/cursor/plugins/tree/main/pstack。
+</div></div></section>
+
+<script>
+const CATS={
+ entry:{n:"入口与配置",c:"--acc",s:"--acc-soft",e:"🚪"},
+ think:{n:"想清楚再动手",c:"--blue",s:"--blue-soft",e:"🧠"},
+ team:{n:"多 AI 协作与找茬",c:"--vio",s:"--vio-soft",e:"🤝"},
+ prove:{n:"验证与证据",c:"--teal",s:"--teal-soft",e:"🔬"},
+ write:{n:"写作与整洁",c:"--gold",s:"--gold-soft",e:"✍️"},
+ custom:{n:"个人/项目定制",c:"--rose",s:"--rose-soft",e:"🧩"}
+};
+const SK=[
+// entry
+["poteto-mode","entry","总管。读你的任务，判断类型，选一套流程，指挥其他 AI 干活。","几乎所有认真的开发任务的起点：修 bug、做功能、重构、提 PR。",1],
+["poteto-help","entry","新手向导。告诉你该用哪个 skill。","不知道用哪个、第一次上手时输入 /poteto-help 加问题。",1],
+["setup-pstack","entry","配置：选用哪些 AI 模型、思考力度多大。","装好后第一件事。它是唯一能被 AI 自动调用的 skill。",0],
+// think
+["in-your-own-words","think","让 AI 用自己的话复述：你的目标是什么、要解决什么问题。","开工前或评审前，确认 AI 没理解偏。只有 7 行。",1],
+["sharpen","think","把任务变“深”而不是变“大”，然后重写你的提示词。","你的需求很模糊或太宽泛时。",1],
+["how","think","弄清代码现在是怎么运转的，输出像资深工程师带新人一样的讲解。","动手改之前，或问“这个应该放哪”。复杂问题会派 2~4 个 AI 分头探索再汇总。",1],
+["why","think","查一段代码“为什么是这样”：翻提交记录、工单、文档、聊天，给出带引用的结论。","想知道设计原因、回归原因、事故复盘时。",1],
+["teach","think","把一大块工作讲到你真能听懂：自动调用 how 和 why，合成一篇讲解。","“教我这个”“帮我真正理解 X”。",1],
+["recall","think","根据聊天记录和现状，还原“我最近在做什么”，给一份当前状态简报。","隔了几天回来接着干活时。",1],
+["ketchup","think","用大白话和小图，补充你离开期间发生了什么，并列出等你决定的事。","你走开又回来，想快速跟上进度。",1],
+["ketchup-video","think","同 ketchup，但做成带字幕的幻灯片小视频。","更喜欢看视频追进度时。",1],
+["bro","think","把上一条消息用最直白的人话重说一遍，不带术语。","AI 说得你看不懂时。只有 7 行。",1],
+["architect","think","写代码前先搭骨架：只写类型、函数签名、模块边界，不写实现。多个 AI 各出方案，选定后再填充。","跨函数/跨模块的改动，怕一上来就把结构定错。",1],
+["figure-it-out","think","没有现成流程匹配时，现场设计一套可审计的做法：假设→验证循环，并记录决策。","大迁移、野心大的多步骤改动、你要走开稍后检查的活。",1],
+// team
+["arena","team","擂台：同一任务让多个 AI 各做一份，挑最好的做底，再把别人的优点嫁接上去。","一次尝试就可能把方向定错的重要产物（设计、方案）。",1],
+["swarm","team","蜂群：同时派很多个 AI 并行干，等全部收齐，汇成一份报告。","需要并行覆盖、赛跑比较、多角度探索时。",1],
+["interrogate","team","审讯：让多个 AI 当“攻击者”拼命找碴，只有“跑出来能复现”的问题才保留。","上线前对有争议的改动做压力测试，只报问题不改代码。",1],
+["blast-radius","team","找出一个改动可能在别处弄坏什么，并用真实运行证明“为什么它安全”。","看一个看似很小的 diff，担心牵一发动全身。",1],
+["reflect","team","派三个 AI 复盘当前对话，总结经验，并落实成对现有 skill 的具体修改。","一次长任务结束后，说“reflect”。",1],
+// prove
+["tdd","prove","先写会失败的测试，再修。仅在你要求或测试容易写时使用。","明确要“回归测试”，或 bug 有廉价的测试切入点。",1],
+["benchmark-checklist","prove","测速度前后的检查清单：瓶颈在哪、可重复吗、测的是不是你以为的东西。","报告“快了 30%”之前。",1],
+["show-me-your-work","prove","给长任务做一张“决策日志”表：做了什么、为什么、证据、结果，一行一条。","通宵/无人值守的任务，之后要人来审。",1],
+["create-verification-skill","prove","为你的项目生成一个“像用户一样操作应用”的验证 skill。","项目里没有可脚本化的方式证明界面/命令行/服务能用。",1],
+["maintain-verification-skill","prove","定期体检那个验证 skill，修正过时的地方，最多提交一个修正 PR。","代码变了，担心验证 skill 已经过时。",1],
+["create-formal-verification-skill","prove","为最容易出 bug、测试又覆盖不到的关键代码，生成“形式化证明”类 skill。","并发竞争、状态机等测试难覆盖的地方。",1],
+["maintain-formal-verification-skill","prove","代码变动后，同步更新形式化模型，并判断失败是“模型过时”还是“代码真有 bug”。","形式化验证与代码出现漂移时。",1],
+["statechart","prove","检查一个“状态机”模型，把系统怎么在状态间跳转画成图，给出走到错误状态的最短路径。","要把一个 bug 画成“经过哪些状态走到错误”。",1],
+// write
+["unslop","write","去掉文字里的“AI 腔”：空洞套话、模糊引用、滥用“不仅…而且…”。","写任何给人看的文字。被其他 skill 反复引用。",1],
+["technical-writing","write","技术文档的写作规范（结构、句式、简洁英语）。","写文档、RFC、README、PR 描述、提交信息。",1],
+["no-comments","write","叫来“Comment Sicko”子 AI，删掉不必要的注释，对声称的约束提出用代码表达的方案。","提交评审之前清理注释。",1],
+["correct","write","把你反复纠正 AI 的同类错误，变成“再也犯不了”：优先改架构，其次类型，其次带修复提示的 lint，最后才写文档。","同一种错误出现两次以上。",1],
+["typescript-best-practices","write","TypeScript 编码规范。","读写任何 .ts / .tsx 文件时。",1],
+// custom
+["automate-me","custom","把你的偏好和工作习惯，写成你自己的“-mode” skill。","想让 AI 以后都按你的方式干活。",1],
+["make-bot-ui","custom","做一个网页按钮，点一下通过 webhook 唤醒一个机器人（密钥只放服务器）。","要自制界面去触发 Grok Bot。",1]
+];
+const PR=[
+["核心",[["能偷懒就偷懒","偏向删除和最小改动，别随手加抽象层。"],["地基思维","动手前先把核心数据结构想对，后面的代码自然顺。"],["从第一性原理重做","加新需求时，像它一开始就存在那样重新设计。"],["质疑前提","两次修复都失败，说明它们共用的前提错了，先验证前提。"],["先减后加","先删死代码和冗余，再在简单的底座上添新东西。"],["降低读者负担","合并只有一个调用者的包装层，缩小可变状态范围。"],["面向结果执行","大改造直接奔目标架构，不留临时兼容状态。"],["体验优先","产品取舍时选用户体验，宁可少而精。"],["穷尽设计空间","没先例时做 2~3 个原型并排比较。"],["造工具","重要的事用脚本/生成器去做，工具本身就是可复查的产物。"]]],
+["架构",[["给领域建模","用状态机、类型、表格代替散落的 if。"],["边界纪律","只在系统边界（网络、配置）做校验，内部信任类型。"],["类型系统纪律","让非法状态在类型上写不出来。"],["操作幂等","崩溃重试后，结果和一次成功一样。"],["迁移调用方再删旧 API","一次性迁完并删除旧接口，不保留兼容层。"],["先拆分再串行","多个执行者写同一处前，先消除共享。"]]],
+["验证",[["证明它真的能用","对真实产物验证，不能只说“编译过了”。"],["治根不治标","追到问题第一次出错的地方去修。"],["拆成可验证的小单元","每个小步骤都以一次检查收尾。"],["测行为不测实现","测试看用户能观察到的结果，而非内部写法。"],["解释这个数字","测出结果先找“什么在限制它”，排除测错了东西。"]]],
+["协作与元规则",[["守住上下文窗口","大输出交给子 AI，主线只保留摘要。"],["别因小事等人","可撤销的事直接做，让人事后纠正。"],["把教训写进结构","同一句叮嘱写第二次时，改成 lint 或脚本。"]]]
+];
+const STAGES=[
+ {e:"💬",t:"你下指令",h:"你只说一句话",p:"输入 /poteto-mode 加上任务。总管开始工作。",say:"“这个页面每隔 750 毫秒就抖一下，先重现再修。”",sk:["poteto-mode","poteto-help","setup-pstack"]},
+ {e:"🪞",t:"复述目标",h:"先说“我是这么理解的”",p:"AI 先用自己的话说出：你的目标、要解决的问题、预计最小的改动。理解错了你马上能纠正。不用等你确认就继续。",say:"“你想消除空闲时的抖动。我预计只改调度那一处。”",sk:["in-your-own-words","sharpen"]},
+ {e:"🗂️",t:"选流程",h:"从 23 套剧本里挑一套",p:"总管判断任务类型：修 bug、新功能、重构、性能、调查、盯 PR……然后把这套剧本的步骤逐条抄进待办清单。",say:"“这是 Bug fix 剧本：先重现、再找根因、再修、再验证。”",sk:["poteto-mode","figure-it-out"]},
+ {e:"🔍",t:"摸清现状",h:"先看懂再动",p:"用 how 弄清代码怎么运转，用 why 查为什么是这样。复杂问题派几个 AI 分头探索再汇总。",say:"“调度器归 scheduler 包管，这个定时器是 2023 年为了某事故加的。”",sk:["how","why","teach","recall"]},
+ {e:"📐",t:"设计",h:"先画骨架，必要时比稿",p:"architect 先写类型和接口骨架；有争议就用 arena 让多个 AI 各出一版，选最好的做底再嫁接优点。",say:"“方案 A 底子好，把方案 B 的错误处理接进来。”",sk:["architect","arena"]},
+ {e:"🛠️",t:"分派干活",h:"总管不亲自写，派子 AI",p:"代码交给子 AI 写，每个只拿到“文件范围+数据结构+验收标准”。可并行的用 swarm 同时跑，共享的东西先拆开避免打架。",say:"“A 改调度，B 补测试，互不碰对方文件。”",sk:["swarm","tdd","typescript-best-practices"]},
+ {e:"⚔️",t:"互相挑错",h:"让另一家 AI 找碴",p:"interrogate 让多个 AI 拼命攻击这次改动；blast-radius 看会不会弄坏别处。只有“能跑出来复现”的问题才算数。",say:"“发现一个：空队列时仍触发定时器。命令和输出在此。”",sk:["interrogate","blast-radius"]},
+ {e:"✅",t:"拿证据",h:"没跑过不算完成",p:"在真实界面/真实程序上验证；测性能的数字要先解释“是什么在限制它”。长任务还要留下决策日志给人事后审。",say:"“已重现并验证：空闲 60 秒，重绘 0 次。”",sk:["benchmark-checklist","show-me-your-work","create-verification-skill","statechart"]},
+ {e:"🧹",t:"整理交付",h:"去 AI 腔、删多余注释、拆小提交",p:"文字过 unslop，代码过 no-comments，拆成顺序清晰的小提交，开 PR，开头先写“用户的目标是什么”。",say:"“PR 描述第一句：消除空闲抖动。”",sk:["unslop","no-comments","technical-writing"]},
+ {e:"🔁",t:"复盘固化",h:"错过的坑，变成“再也踩不到”",p:"reflect 复盘对话，把经验落成对现有 skill 的修改；correct 把反复被纠正的错误变成类型、lint 等结构约束。",say:"“同类错误出现两次：加一条 lint，报错里直接写该用哪个函数。”",sk:["reflect","correct","automate-me"]}
+];
+const $=s=>document.querySelector(s);
+
+/* hero stats */
+document.querySelectorAll('[data-n]').forEach(el=>{
+  const to=+el.dataset.n;let t0=null;
+  const f=ts=>{t0??=ts;const k=Math.min(1,(ts-t0)/1100);el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)};
+  requestAnimationFrame(f);
+});
+/* hero canvas */
+(()=>{
+  const c=$('#bg'),x=c.getContext('2d');let w,h,P=[];
+  const rs=()=>{w=c.width=c.offsetWidth*devicePixelRatio;h=c.height=c.offsetHeight*devicePixelRatio;P=Array.from({length:46},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3*devicePixelRatio,vy:(Math.random()-.5)*.3*devicePixelRatio}))};
+  rs();addEventListener('resize',rs);
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const col=()=>getComputedStyle(document.documentElement).getPropertyValue('--acc').trim();
+  (function loop(){
+    x.clearRect(0,0,w,h);const cc=col();x.strokeStyle=cc;x.fillStyle=cc;
+    P.forEach(p=>{p.x=(p.x+p.vx+w)%w;p.y=(p.y+p.vy+h)%h;x.globalAlpha=.5;x.beginPath();x.arc(p.x,p.y,2*devicePixelRatio,0,7);x.fill()});
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const d=Math.hypot(P[i].x-P[j].x,P[i].y-P[j].y);if(d<140*devicePixelRatio){x.globalAlpha=.16*(1-d/(140*devicePixelRatio));x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}
+    requestAnimationFrame(loop)})();
+})();
+
+/* flow */
+let cur=0,playing=true,timer;
+const track=$('#track');
+STAGES.forEach((s,i)=>{const b=document.createElement('button');b.className='node';b.innerHTML=`<div class="dot">${s.e}</div><small>${s.t}</small>`;b.onclick=()=>{go(i);setPlay(false)};track.appendChild(b)});
+function go(i){
+  cur=(i+STAGES.length)%STAGES.length;
+  [...track.querySelectorAll('.node')].forEach((n,k)=>{n.classList.toggle('on',k===cur);n.classList.toggle('done',k<cur)});
+  $('#bar').style.width=(cur/(STAGES.length-1))*90+'%';
+  const s=STAGES[cur];
+  $('#detail').innerHTML=`<div class="fade"><div class="kicker">第 ${cur+1} 步 / ${STAGES.length}</div><h3>${s.e} ${s.h}</h3><p>${s.p}</p><div class="say">AI 可能会说：${s.say}</div></div>
+  <div class="fade"><p style="margin-top:0"><b>这一步用到的 skill（点击查看）：</b></p><div class="chips">${s.sk.map(n=>`<button class="chip" data-go="${n}">${n}</button>`).join('')}</div></div>`;
+}
+function setPlay(v){playing=v;$('#play').textContent=v?'⏸ 暂停':'▶ 播放';clearInterval(timer);if(v)timer=setInterval(()=>go(cur+1),4200)}
+$('#play').onclick=()=>setPlay(!playing);
+$('#prev').onclick=()=>{go(cur-1);setPlay(false)};
+$('#next').onclick=()=>{go(cur+1);setPlay(false)};
+go(0);setPlay(!matchMedia('(prefers-reduced-motion:reduce)').matches);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)jump(b.dataset.go)});
+
+/* hub */
+(()=>{
+  const G=[
+   ["① 先想清楚","搞懂你要什么、代码现状",["in-your-own-words","how","why"],"--blue"],
+   ["② 设计","动手前先定骨架",["architect","figure-it-out"],"--blue"],
+   ["③ 并行干活","多个 AI 同时做",["swarm","arena"],"--vio"],
+   ["④ 检验","专找问题、证明靠谱",["interrogate","blast-radius","benchmark-checklist"],"--teal"],
+   ["⑤ 收尾","文字、注释、留记录",["unslop","no-comments","show-me-your-work"],"--gold"]];
+  const REL={architect:["how","why","arena"],interrogate:["arena","in-your-own-words"],"figure-it-out":["arena"],"blast-radius":["arena"]};
+  const rel=n=>{const o=new Set(REL[n]||[]);Object.entries(REL).forEach(([k,v])=>v.includes(n)&&o.add(k));return o};
+  const desc=n=>(SK.find(x=>x[0]===n)||[])[2]||'';
+  const short=n=>{const d=desc(n),i=d.indexOf('：');return (i>0&&i<=5?d.slice(i+1):d).split('。')[0]};
+  $('#hub').innerHTML=`<div class="hubcard" data-go="poteto-mode"><b>poteto-mode · 总管</b><span>读懂你的任务 → 选流程 → 叫专家 → 指挥子 AI</span></div><div class="trunk"></div>
+  <div class="cols" id="cols">${G.map(([t,d,l,c])=>`<div class="col"><h4>${t}</h4><div class="d">${d}</div>${l.map(n=>`<div class="pill" data-n="${n}" style="--c:var(${c})"><b>${n}</b><span>${short(n)}</span><div class="tag2"></div></div>`).join('')}</div>`).join('')}</div>
+  <div class="relhint" id="relhint">把鼠标放到卡片上试试 ↑</div>`;
+  const cols=$('#cols');
+  cols.addEventListener('mouseover',e=>{
+    const p=e.target.closest('.pill');if(!p)return;
+    const n=p.dataset.n,r=rel(n);cols.classList.add('hov');
+    cols.querySelectorAll('.pill').forEach(q=>{q.classList.toggle('self',q===p);const is=r.has(q.dataset.n);q.classList.toggle('rel',is);
+      q.querySelector('.tag2').textContent=q===p?'当前':is?((REL[n]||[]).includes(q.dataset.n)?'← 被它调用':'→ 会调用它'):''});
+    $('#relhint').textContent=r.size?`${n} 与 ${[...r].join('、')} 有调用关系`:`${n} 由总管直接调用，不依赖其他专家`;
+  });
+  cols.addEventListener('mouseleave',()=>{cols.classList.remove('hov');cols.querySelectorAll('.pill').forEach(q=>q.classList.remove('self','rel'));$('#relhint').textContent='把鼠标放到卡片上试试 ↑'});
+  cols.addEventListener('click',e=>{const p=e.target.closest('.pill');if(p)jump(p.dataset.n)});
+})();
+
+/* map */
+const tabs=$('#tabs'),grid=$('#grid');let sel='all';
+function renderTabs(){
+  const keys=['all',...Object.keys(CATS)];
+  tabs.innerHTML=keys.map(k=>{const n=k==='all'?SK.length:SK.filter(s=>s[1]===k).length;return `<button class="tab ${sel===k?'on':''}" data-k="${k}">${k==='all'?'全部':CATS[k].e+' '+CATS[k].n}<i>${n}</i></button>`}).join('')+`<button class="tab ${sel==='pr'?'on':''}" data-k="pr">⚖️ 原则<i>24</i></button>`;
+}
+tabs.onclick=e=>{const b=e.target.closest('.tab');if(!b)return;if(b.dataset.k==='pr'){location.hash='#principles';return}sel=b.dataset.k;renderTabs();renderGrid()};
+let io;
+function renderGrid(){
+  const list=SK.filter(s=>sel==='all'||s[1]===sel);
+  grid.innerHTML=list.map(s=>{const c=CATS[s[1]];return `<div class="sk" id="sk-${s[0]}" style="--c:var(${c.c});--cs:var(${c.s})">
+   <span class="hint">${s[4]?'🔒':'🤖'}</span><h4><code>${s[0]}</code></h4>
+   <p class="what">${s[2]}</p><div class="more"><p><b>什么时候用：</b>${s[3]}</p><p><b>类别：</b>${c.e} ${c.n}</p></div></div>`}).join('');
+  io?.disconnect();io=new IntersectionObserver((es)=>es.forEach((en,i)=>{if(en.isIntersecting){setTimeout(()=>en.target.classList.add('in'),(i%6)*60);io.unobserve(en.target)}}),{threshold:.1});
+  grid.querySelectorAll('.sk').forEach(el=>{io.observe(el);el.onclick=()=>el.classList.toggle('open')});
+}
+function jump(n){
+  const s=SK.find(x=>x[0]===n);if(!s)return;
+  if(sel!=='all'&&sel!==s[1]){sel='all';renderTabs();renderGrid()}
+  const el=document.getElementById('sk-'+n);el.classList.add('in','open');
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+  el.animate([{boxShadow:'0 0 0 0 var(--acc)'},{boxShadow:'0 0 0 12px transparent'}],{duration:900,iterations:2});
+}
+renderTabs();renderGrid();
+
+/* principles */
+$('#pg').innerHTML=PR.map(([t,l])=>`<div class="pg"><h4>${t}<span style="color:var(--mute);font-weight:400"> · ${l.length}</span></h4>${l.map(([a,b])=>`<div class="pr"><b>${a}</b><span>${b}</span></div>`).join('')}</div>`).join('');
+</script>
+</body></html>

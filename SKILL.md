@@ -37,7 +37,7 @@ For each notable design choice, state: the choice → the problem it addresses �
 - Optionally, if the user asked to compare, build a side-by-side table across the same six layers.
 
 ### 5. Write the report
-Use the template below. When the user wants something a general audience grasps at a glance, deliver a single self-contained HTML page (analogy, layered diagram, a worked example flow, key decisions, strengths/risks) instead of Markdown; keep every claim labelled observed or inferred. Adapt depth to the request: "quick take" → sections 1, 2 and 5 only; "deep dive" → everything. Reply in the user's language. Cite files as `path:line` so claims are checkable.
+Use the template below. When the user wants something a general audience grasps at a glance, deliver a single self-contained HTML page instead of Markdown, and default to plain language (no jargon, one-sentence conclusion first). `assets/example-visual-report.html` is a worked example for a 58-skill collection: animated end-to-end flow, hub-and-columns diagram (hover shows who calls whom), filterable per-skill cards, principle list. Reuse its structure, replace the data arrays, and keep every claim labelled observed or inferred. Avoid radial node graphs with uniform circles; they get cluttered, while grouped columns stay readable. Test the page in a browser before handing it over. Adapt depth to the request: "quick take" → sections 1, 2 and 5 only; "deep dive" → everything. Reply in the user's language. Cite files as `path:line` so claims are checkable.
 
 ```
 # <skill-name> 原理分析 / Principles Report
